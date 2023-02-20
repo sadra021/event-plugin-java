@@ -1,9 +1,6 @@
 package org.tron.mongodb;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
+import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.IndexOptions;
@@ -54,17 +51,18 @@ public class MongoManager {
         mongo = new MongoClient(addrs, credential, options);
         db = mongo.getDatabase(databaseName);
 
-        MongoCollection<Document> publicaddress = db.getCollection("publicaddress");
-        if (Objects.isNull(publicaddress)) {
+        try{
             db.createCollection("publicaddresses");
-
             log.info("Custom log : create in init config method");
-
             MongoCollection<Document> collection = db.getCollection("publicaddresses");
             Document doc = new Document();
             doc.put("address", "123456677788");
             collection.insertOne(doc);
             log.info("Custom log : document created");
+        }
+        catch (MongoCommandException e){
+            log.error("Custom log: Collection exist ...");
+
         }
     }
 
