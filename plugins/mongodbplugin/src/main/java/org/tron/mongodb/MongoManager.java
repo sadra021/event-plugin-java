@@ -52,7 +52,7 @@ public class MongoManager {
   }
 
   public void createCollection(String collectionName) {
-    log.info("create method reached ");
+    log.info("Custom log : [1] create method reached :" + collectionName);
     if (db != null && StringUtils.isNotNullOrEmpty(collectionName)) {
       log.info("first if checked");
       if (Objects.isNull(db.getCollection(collectionName))){
@@ -60,13 +60,13 @@ public class MongoManager {
         db.createCollection(collectionName);
       }
     }
-    log.info("collection created");
+    log.info("collection created :" + collectionName);
   }
 
   public void createCollection(String collectionName, Map<String, Boolean> indexOptions) {
     log.info("[createCollection] collection={} start", collectionName);
 
-    log.info("Custom log : create method reached ");
+    log.info("Custom log : [2] create method reached "+ collectionName);
 
 
     if (db != null && StringUtils.isNotNullOrEmpty(collectionName)) {

@@ -137,6 +137,9 @@ public class MongodbSenderImpl {
 
     private void createCollections() {
         if (mongoConfig.enabledIndexes()) {
+
+            log.info("Custom log :inside the if");
+
             Map<String, Boolean> indexOptions = new HashMap<>();
             indexOptions.put("blockNumber", true);
             mongoManager.createCollection(blockTopic, indexOptions);
@@ -165,6 +168,10 @@ public class MongodbSenderImpl {
             mongoManager.createCollection("publicAddresses", walletIndexOption);
 
         } else {
+
+            log.info("Custom log : inside the else");
+
+
             mongoManager.createCollection(blockTopic);
             mongoManager.createCollection(transactionTopic);
             mongoManager.createCollection(contractLogTopic);
