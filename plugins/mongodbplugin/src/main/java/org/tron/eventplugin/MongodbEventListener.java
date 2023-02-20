@@ -4,6 +4,8 @@ import org.pf4j.Extension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tron.common.logsfilter.IPluginEventListener;
+import org.tron.eventplugin.customModel.Response;
+
 import java.util.Objects;
 
 @Extension
@@ -14,7 +16,7 @@ public class MongodbEventListener implements IPluginEventListener {
     @Override
     public void setServerAddress(String address) {
 
-        if (Objects.isNull(address) || address.length() == 0){
+        if (Objects.isNull(address) || address.length() == 0) {
             return;
         }
 
@@ -40,7 +42,7 @@ public class MongodbEventListener implements IPluginEventListener {
     @Override
     public void handleBlockEvent(Object data) {
 
-        if (Objects.isNull(data)){
+        if (Objects.isNull(data)) {
             return;
         }
 
@@ -49,16 +51,27 @@ public class MongodbEventListener implements IPluginEventListener {
 
     @Override
     public void handleTransactionTrigger(Object data) {
-        if (Objects.isNull(data)){
+        if (Objects.isNull(data)) {
             return;
         }
+        MongodbSenderImpl instance = MongodbSenderImpl.getInstance();
 
-        MongodbSenderImpl.getInstance().getTriggerQueue().offer(data);
+        Response res = (Response) data;
+
+        res.getFromAddress();
+        res.getToAddress();
+
+        boolean isFromAddressExist = instance.isAddressExist(res.getFromAddress());
+        boolean isToAddressExist = instance.isAddressExist(res.getToAddress());
+
+        if (isFromAddressExist || isToAddressExist) {
+            MongodbSenderImpl.getInstance().getTriggerQueue().offer(data);
+        }
     }
 
     @Override
     public void handleContractLogTrigger(Object data) {
-        if (Objects.isNull(data)){
+        if (Objects.isNull(data)) {
             return;
         }
 
@@ -67,7 +80,7 @@ public class MongodbEventListener implements IPluginEventListener {
 
     @Override
     public void handleContractEventTrigger(Object data) {
-        if (Objects.isNull(data)){
+        if (Objects.isNull(data)) {
             return;
         }
 
@@ -76,7 +89,7 @@ public class MongodbEventListener implements IPluginEventListener {
 
     @Override
     public void handleSolidityTrigger(Object data) {
-        if (Objects.isNull(data)){
+        if (Objects.isNull(data)) {
             return;
         }
 
@@ -85,7 +98,7 @@ public class MongodbEventListener implements IPluginEventListener {
 
     @Override
     public void handleSolidityLogTrigger(Object data) {
-        if (Objects.isNull(data)){
+        if (Objects.isNull(data)) {
             return;
         }
 
@@ -94,7 +107,7 @@ public class MongodbEventListener implements IPluginEventListener {
 
     @Override
     public void handleSolidityEventTrigger(Object data) {
-        if (Objects.isNull(data)){
+        if (Objects.isNull(data)) {
             return;
         }
 

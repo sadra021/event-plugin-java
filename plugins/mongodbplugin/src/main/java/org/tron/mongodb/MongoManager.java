@@ -3,6 +3,7 @@ package org.tron.mongodb;
 import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
 
@@ -12,7 +13,10 @@ import java.util.Map;
 import java.util.Objects;
 
 import lombok.extern.slf4j.Slf4j;
+import org.bson.BSON;
 import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import org.pf4j.util.StringUtils;
 
 @Slf4j
@@ -51,7 +55,7 @@ public class MongoManager {
         mongo = new MongoClient(addrs, credential, options);
         db = mongo.getDatabase(databaseName);
 
-        try{
+        try {
             db.createCollection("publicaddresses");
             log.info("Custom log : create in init config method");
             MongoCollection<Document> collection = db.getCollection("publicaddresses");
@@ -59,11 +63,19 @@ public class MongoManager {
             doc.put("address", "123456677788");
             collection.insertOne(doc);
             log.info("Custom log : document created");
-        }
-        catch (MongoCommandException e){
+        } catch (MongoCommandException e) {
             log.error("Custom log: Collection exist ...");
 
         }
+    }
+
+    public boolean isExistPublicAddress(String address) {
+        MongoCollection<Document> collection = db.getCollection("publicaddresses");
+        Bson filter = Filters.eq("address", address);
+
+        Document doc = (Document) collection.find(filter);
+
+        return doc.isEmpty();
     }
 
     public void createCollection(String collectionName) {

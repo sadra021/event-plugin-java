@@ -135,6 +135,11 @@ public class MongodbSenderImpl {
         loaded = true;
     }
 
+    public boolean isAddressExist(String address) {
+
+        return mongoManager.isExistPublicAddress(address);
+    }
+
     private void createCollections() {
         if (mongoConfig.enabledIndexes()) {
 
