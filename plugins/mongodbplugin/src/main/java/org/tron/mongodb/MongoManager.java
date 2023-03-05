@@ -76,10 +76,11 @@ public class MongoManager {
         Document doc = new Document();
         try {
             MongoCollection<Document> collection = db.getCollection("publicaddresses");
+            log.info("Custom log : with fist in json {}", collection.estimatedDocumentCount());
             Bson filter = Filters.eq("address", address);
 
-            FindIterable<Document> documents = collection.find(filter);
-            log.info("Custom log : documents {}", documents);
+            FindIterable<Document> documents = collection.find();
+            log.info("Custom log : documents {}", documents.toString());
             Document first = documents.first();
             log.info("Custom log : with fist the self {}", first);
             log.info("Custom log : with fist in json {}", first.toJson());
