@@ -79,8 +79,10 @@ public class MongoManager {
             Bson filter = Filters.eq("address", address);
 
             FindIterable<Document> documents = collection.find(filter);
+            log.info("Custom log : documents {}", documents);
             Document first = documents.first();
-            log.info("Custom log : with fist {}", first.get("address"));
+            log.info("Custom log : with fist the self {}", first);
+            log.info("Custom log : with fist in json {}", first.toJson());
 //            doc = documents.iterator().next();
 //            log.info("Custom log : with iter {}", doc.get("address"));
 
