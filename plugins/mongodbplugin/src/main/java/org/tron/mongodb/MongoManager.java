@@ -91,7 +91,7 @@ public class MongoManager {
             if(documentTest==null){
                 log.info("Custom log: Document TEST is empty");
             }else{
-                log.info("Custom log: Document TEST is not empty");
+                log.info("Custom log: Document TEST is not empty doc is : {}",documentTest.get("address"));
             }
 
 //            log.info("Custom log : documents {}", documents.toString());
