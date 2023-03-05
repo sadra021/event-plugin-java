@@ -81,8 +81,8 @@ public class MongoManager {
             FindIterable<Document> documents = collection.find(filter);
             Document first = documents.first();
             log.info("Custom log : with fist {}", first.get("address"));
-            doc = documents.iterator().next();
-            log.info("Custom log : with iter {}", doc.get("address"));
+//            doc = documents.iterator().next();
+//            log.info("Custom log : with iter {}", doc.get("address"));
 
         } catch (Exception e) {
             log.info("Custom log  : error  {}", e.getMessage());
