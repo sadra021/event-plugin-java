@@ -1,6 +1,7 @@
 package org.tron.mongodb;
 
 import com.mongodb.*;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import lombok.extern.slf4j.Slf4j;
 import org.bson.BSON;
@@ -75,7 +78,9 @@ public class MongoManager {
             MongoCollection<Document> collection = db.getCollection("publicaddresses");
             Bson filter = Filters.eq("address", address);
 
-            doc = (Document) collection.find(filter);
+            FindIterable<Document> documents = collection.find(filter);
+            doc = documents.iterator().next();
+            log.info("{}", doc.get("address"));
 
         } catch (Exception e) {
             log.info("Custom log  : error  {}", e.getMessage());
