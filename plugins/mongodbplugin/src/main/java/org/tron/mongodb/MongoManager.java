@@ -77,7 +77,7 @@ public class MongoManager {
         try {
             MongoCollection<Document> collection = db.getCollection("publicaddresses");
             log.info("Custom log : collection total documents is : {}", collection.estimatedDocumentCount());
-            Bson filter = Filters.eq("address", address);
+            Bson filter = Filters.eq("address", "123456677788");
 
             Document document = collection.find(filter).first();
             if(document==null){
