@@ -74,7 +74,7 @@ public class MongoManager {
         Bson filter = Filters.eq("address", address);
 
         Document doc = (Document) collection.find(filter);
-
+        log.info("Custom log : recived to isExistPublicAddress method ==> {} ", address);
         return doc.isEmpty();
     }
 

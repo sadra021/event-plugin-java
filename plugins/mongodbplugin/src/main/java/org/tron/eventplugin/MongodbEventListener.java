@@ -60,14 +60,9 @@ public class MongodbEventListener implements IPluginEventListener {
         log.info("Custom log : data object {}", data.toString());
 
         Response res = Converter.jsonStringToObject(data.toString(), Response.class);
-
-
         log.info("Custom log : map data to response class :: {} ", res);
 
-        res.getFromAddress();
         log.info("Custom log : FromAddr {} ", res.getFromAddress());
-
-        res.getToAddress();
         log.info("Custom log : ToAddr {} ", res.getToAddress());
 
         boolean isFromAddressExist = instance.isAddressExist(res.getFromAddress());
@@ -80,7 +75,7 @@ public class MongodbEventListener implements IPluginEventListener {
         if (!isFromAddressExist || !isToAddressExist) {
             MongodbSenderImpl.getInstance().getTriggerQueue().offer(data);
 
-            log.info("Custom log : data submited to mongo ");
+            log.info("Custom log : data submitted to mongo ");
         }
     }
 
