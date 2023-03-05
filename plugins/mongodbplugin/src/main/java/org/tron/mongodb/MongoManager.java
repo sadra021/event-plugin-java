@@ -76,14 +76,28 @@ public class MongoManager {
         Document doc = new Document();
         try {
             MongoCollection<Document> collection = db.getCollection("publicaddresses");
-            log.info("Custom log : with fist in json {}", collection.estimatedDocumentCount());
+            log.info("Custom log : collection total documents is : {}", collection.estimatedDocumentCount());
             Bson filter = Filters.eq("address", address);
 
-            FindIterable<Document> documents = collection.find();
-            log.info("Custom log : documents {}", documents.toString());
-            Document first = documents.first();
-            log.info("Custom log : with fist the self {}", first);
-            log.info("Custom log : with fist in json {}", first.toJson());
+            Document document = collection.find(filter).first();
+            if(document!=null){
+                log.info("Custom log: Document is empty");
+
+            }else{
+                log.info("Custom log: Document is not empty");
+            }
+
+            Document documentTest = collection.find().first();
+            if(documentTest!=null){
+                log.info("Custom log: Document TEST is empty");
+            }else{
+                log.info("Custom log: Document TEST is not empty");
+            }
+
+//            log.info("Custom log : documents {}", documents.toString());
+//            Document first = documents.first();
+//            log.info("Custom log : with fist the self {}", first);
+//            log.info("Custom log : with fist in json {}", first.toJson());
 //            doc = documents.iterator().next();
 //            log.info("Custom log : with iter {}", doc.get("address"));
 
