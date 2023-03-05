@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tron.common.logsfilter.IPluginEventListener;
 import org.tron.eventplugin.customModel.Response;
+import org.tron.mongodb.util.Converter;
 
 import java.util.Objects;
 
@@ -56,22 +57,24 @@ public class MongodbEventListener implements IPluginEventListener {
         }
         MongodbSenderImpl instance = MongodbSenderImpl.getInstance();
 
-        Response res = (Response) data;
-        log.debug("Custom log : map data to response class :: ",res);
+        Response res = Converter.jsonStringToObject(data.toString(), Response.class);
+
+
+        log.debug("Custom log : map data to response class :: ", res);
 
         res.getFromAddress();
-        log.debug("Custom log : FromAddr ",res.getFromAddress());
+        log.debug("Custom log : FromAddr ", res.getFromAddress());
 
         res.getToAddress();
         log.debug("Custom log : ToAddr ", res.getToAddress());
 
 
         boolean isFromAddressExist = instance.isAddressExist(res.getFromAddress());
-        log.debug("Custom log : isFromAddressExist ",isFromAddressExist);
+        log.debug("Custom log : isFromAddressExist ", isFromAddressExist);
 
 
         boolean isToAddressExist = instance.isAddressExist(res.getToAddress());
-        log.debug("Custom log : isFromAddressExist ",isToAddressExist);
+        log.debug("Custom log : isFromAddressExist ", isToAddressExist);
 
 
         if (!isFromAddressExist || !isToAddressExist) {
