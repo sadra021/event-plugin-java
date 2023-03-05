@@ -70,13 +70,17 @@ public class MongoManager {
     }
 
     public boolean isExistPublicAddress(String address) {
+        Document doc = new Document();
+        try {
+            MongoCollection<Document> collection = db.getCollection("publicaddresses");
+            Bson filter = Filters.eq("address", address);
 
+            doc = (Document) collection.find(filter);
+
+        } catch (Exception e) {
+            log.info("Custom log  : error  ", e);
+        }
         log.info("Custom log : recived to isExistPublicAddress method ==> {} ", address);
-
-        MongoCollection<Document> collection = db.getCollection("publicaddresses");
-        Bson filter = Filters.eq("address", address);
-
-        Document doc = (Document) collection.find(filter);
         log.info("Custom log : return stage {} ", address);
         return doc.isEmpty();
     }
