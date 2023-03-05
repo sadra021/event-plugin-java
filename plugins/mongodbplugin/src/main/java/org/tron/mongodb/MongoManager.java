@@ -80,7 +80,7 @@ public class MongoManager {
             Bson filter = Filters.eq("address", address);
 
             Document document = collection.find(filter).first();
-            if(document!=null){
+            if(document==null){
                 log.info("Custom log: Document is empty");
 
             }else{
@@ -88,7 +88,7 @@ public class MongoManager {
             }
 
             Document documentTest = collection.find().first();
-            if(documentTest!=null){
+            if(documentTest==null){
                 log.info("Custom log: Document TEST is empty");
             }else{
                 log.info("Custom log: Document TEST is not empty");
