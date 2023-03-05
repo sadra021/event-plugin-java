@@ -57,6 +57,8 @@ public class MongodbEventListener implements IPluginEventListener {
         }
         MongodbSenderImpl instance = MongodbSenderImpl.getInstance();
 
+        log.debug("Custom log : ", data.toString());
+
         Response res = Converter.jsonStringToObject(data.toString(), Response.class);
 
 
