@@ -21,6 +21,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.pf4j.util.StringUtils;
+import sun.font.TrueTypeFont;
 
 @Slf4j
 public class MongoManager {
@@ -77,36 +78,15 @@ public class MongoManager {
         try {
             MongoCollection<Document> collection = db.getCollection("publicaddresses");
             log.info("Custom log : collection total documents is : {}", collection.estimatedDocumentCount());
-            Bson filter = Filters.eq("address", "123456677788");
+            Bson filter = Filters.eq("address", address);
 
-            Document document = collection.find(filter).first();
-            if(document==null){
-                log.info("Custom log: Document is empty");
-
-            }else{
-                log.info("Custom log: Document is not empty");
-            }
-
-            Document documentTest = collection.find().first();
-            if(documentTest==null){
-                log.info("Custom log: Document TEST is empty");
-            }else{
-                log.info("Custom log: Document TEST is not empty doc is : {}",documentTest.get("address"));
-            }
-
-//            log.info("Custom log : documents {}", documents.toString());
-//            Document first = documents.first();
-//            log.info("Custom log : with fist the self {}", first);
-//            log.info("Custom log : with fist in json {}", first.toJson());
-//            doc = documents.iterator().next();
-//            log.info("Custom log : with iter {}", doc.get("address"));
+            doc = collection.find(filter).first();
 
         } catch (Exception e) {
             log.info("Custom log  : error  {}", e.getMessage());
         }
-        log.info("Custom log : recived to isExistPublicAddress method ==> {} ", address);
-        log.info("Custom log : return stage {} ", address);
-        return doc.isEmpty();
+
+        return doc == null ? false : true;
     }
 
     public void createCollection(String collectionName) {

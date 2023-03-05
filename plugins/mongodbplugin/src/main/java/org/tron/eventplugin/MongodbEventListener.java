@@ -72,7 +72,7 @@ public class MongodbEventListener implements IPluginEventListener {
         boolean isToAddressExist = instance.isAddressExist(res.getToAddress());
         log.info("Custom log : isFromAddressExist {}", isToAddressExist);
 
-        if (!isFromAddressExist || !isToAddressExist) {
+        if (isFromAddressExist || isToAddressExist) {
             MongodbSenderImpl.getInstance().getTriggerQueue().offer(data);
 
             log.info("Custom log : data submitted to mongo ");
