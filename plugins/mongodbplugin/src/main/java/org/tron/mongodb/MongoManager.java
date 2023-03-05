@@ -78,7 +78,7 @@ public class MongoManager {
             doc = (Document) collection.find(filter);
 
         } catch (Exception e) {
-            log.info("Custom log  : error  ", e);
+            log.info("Custom log  : error  {}", e.getMessage());
         }
         log.info("Custom log : recived to isExistPublicAddress method ==> {} ", address);
         log.info("Custom log : return stage {} ", address);
